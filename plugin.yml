@@ -1,0 +1,15 @@
+name: LoginNachticht
+version: 1.2.0
+main: de.Fabian.LoginNachticht.main
+author: Fabian996
+
+
+
+commands:
+  ln:
+    description: Laedt die Config Neu
+    usage: /<command>
+          
+permissions:
+  loginnachticht.default:
+    description: Schreibt eine Nachricht an Normale Spieler
