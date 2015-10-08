@@ -1,0 +1,6 @@
+# Login Nachtricht
+ln:
+  AutoUpdate:
+    Enabled?: true
+message: "Willkommen %p% , Viel Spa\xdf beim Spielen auf."
+leftmessage: "%p%  hat den Server  verlassen. "
