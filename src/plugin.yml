@@ -1,12 +1,14 @@
 name: LoginNachticht
-version: 1.2.4
+version: 1.2.5
 main: de.Fabian996.LoginNachticht.main
 author: Fabian996
 
 
 commands:
   ln:
-    description: load the Config
+    description: Load the config
     usage: /<command>
           
 permissions:
+  login.default:
+    description: Show all Join and left Message 
