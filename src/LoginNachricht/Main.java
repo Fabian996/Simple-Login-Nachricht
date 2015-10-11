@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.Fabian996.LoginNachticht.Updater;
+
 public class main extends JavaPlugin implements Listener{
 
 	Config settings = Config.getInstance();
@@ -27,18 +29,15 @@ public class main extends JavaPlugin implements Listener{
 		saveConfig();
 		
 		// Updater
-	    Boolean AutoUpdate = Boolean.valueOf(getConfig().getBoolean("ln.AutoUpdate.Enabled?", false));
+	    Boolean AutoUpdate = Boolean.valueOf(getConfig().getBoolean("ln.AutoUpdate", false));
 	    if (AutoUpdate.booleanValue())
 	    {
-	      if (Updater.UpdateResult.UPDATE_AVAILABLE != null)
+	      if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE)
 	        System.out.println("[Login Nachricht] New version avaible!");
-	      else if (Updater.UpdateResult.NO_UPDATE != null)
+	      else if (updater.getResult() == Updater.UpdateResult.NO_UPDATE)
 	      {
 	        System.out.println("[Login Nachricht]No new version avaible!");
 	      }
-	    }
-	    else {
-	      System.out.println("[Login Nachricht] AutoUpdater for this plugin is currently disabled!");
 	    }
 	    loadConfig();
 	    reloadConfig();
@@ -60,13 +59,16 @@ public class main extends JavaPlugin implements Listener{
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent e){
 		Player p = e.getPlayer();
+		if ((p.hasPermission("login.default"))) {
 			e.setJoinMessage(ChatColor.AQUA + (this.settings.getConfig().getString("message").replace("%p%", p.getName())));
-		
+		}
 	}
 	@EventHandler
 	public void onPlayerLeft(PlayerQuitEvent e){
 		Player p = e.getPlayer();
+		if ((p.hasPermission("login.default"))) {
 			e.setQuitMessage(ChatColor.DARK_GREEN + (this.settings.getConfig().getString("leftmessage")).replace("%p%", p.getName()));
+		}	
 	}
 	   public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	  {
@@ -87,11 +89,11 @@ public class main extends JavaPlugin implements Listener{
 	  }
 	   
 	   private void loadConfig() {
-		    getConfig().options().header("|----------------|\n| Login Nachtricht |\n|----------------|");
+		    getConfig().options().header("|----------------|\n|Login Nachtricht|\n|----------------|");
 		    getConfig().options().copyDefaults(true);
 
 
-		    String Update = "ln.AutoUpdate.Enabled?";
+		    String Update = "ln.AutoUpdate";
 		    getConfig().addDefault(Update, Boolean.valueOf(false));
 		    getConfig().addDefault("message", "Willkommen %p% , Viel Spaß beim Spielen auf.");
 		    getConfig().addDefault("leftmessage", "%p% hat den Server  verlassen. ");
